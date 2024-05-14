@@ -7,6 +7,7 @@ import TOC from "./TOC";
 export default function Labs() {
   return (
     <div>
+      <h1>Yumei Wang Summer1 2024</h1>
       <h1>Labs</h1>
       <TOC />
       <Routes>
@@ -15,6 +16,7 @@ export default function Labs() {
         <Route path="Lab2" element={<Lab2 />} />
         <Route path="Lab3" element={<Lab3 />} />
       </Routes>
+      <a href="https://github.com/mammon0120/kanbas-react-web-app.git">GitHub</a>
 
     </div>
   );
