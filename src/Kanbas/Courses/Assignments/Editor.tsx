@@ -125,8 +125,8 @@ export default function AssignmentEditor() {
 
             <table>
                 <tr>
-                    
-                    <td align="right" valign="top">
+                    <td align="right" valign="top"></td>
+                    <td align="right" valign="top"  style={{ width: '100%' }}>
                         <button type="button">Cancel</button>
                     </td>
                     <td align="right" valign="top">

@@ -5,20 +5,24 @@ export default function Forms() {
             <form id="wd-text-fields">
                 <h5>Text Fields</h5>
                 <label htmlFor="wd-text-fields-username">Username:</label>
-                <input id="wd-text-fields-username" placeholder="jdoe" /> <br />
+                <input id="wd-text-fields-username" placeholder="jdoe" /> 
+                <br />
 
                 <label htmlFor="wd-text-fields-password">Password:</label>
                 <input type="password" id="wd-text-fields-password" value="123@#$asd" />
                 <br />
+
                 <label htmlFor="wd-text-fields-first-name">First name:</label>
-                <input type="text" id="wd-text-fields-first-name" title="John" /> <br />
+                <input type="text" id="wd-text-fields-first-name" title="John" /> 
+                <br />
 
                 <label htmlFor="wd-text-fields-last-name">Last name:</label>
                 <input type="text" id="wd-text-fields-last-name" placeholder="Doe"
                     value="Wonderland" title="The last name" />
 
                 <h5>Text boxes</h5>
-                <label>Biography:</label><br />
+                <label>Biography:</label>
+                <br />
                 <textarea id="wd-textarea" cols={30} rows={10}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
 
                 <h5 id="wd-buttons">Buttons</h5>
@@ -30,7 +34,6 @@ export default function Forms() {
                 <input id="wd-upload" type="file" />
 
                 <h5 id="wd-radio-buttons">Radio buttons</h5>
-
                 <label>Favorite movie genre:</label><br />
 
                 <input type="radio" name="radio-genre" id="wd-radio-comedy" />
@@ -67,8 +70,7 @@ export default function Forms() {
                 <select id="wd-select-one-genre">
                     <option value="COMEDY">Comedy</option>
                     <option value="DRAMA">Drama</option>
-                    <option selected value="SCIFI">
-                        Science Fiction</option>
+                    <option selected value="SCIFI">Science Fiction</option>
                     <option value="FANTASY">Fantasy</option>
                 </select>
 
@@ -77,8 +79,7 @@ export default function Forms() {
                 <select id="wd-select-many-genre" multiple>
                     <option selected value="COMEDY">Comedy</option>
                     <option value="DRAMA">Drama</option>
-                    <option selected value="SCIFI">
-                        Science Fiction</option>
+                    <option selected value="SCIFI">Science Fiction</option>
                     <option value="FANTASY">Fantasy</option>
                 </select>
 
@@ -89,8 +90,7 @@ export default function Forms() {
                     placeholder="jdoe@somewhere.com"
                     id="wd-text-fields-email" /><br />
 
-                <label htmlFor="wd-text-fields-salary-start"> Starting salary:
-                </label>
+                <label htmlFor="wd-text-fields-salary-start"> Starting salary:</label>
                 <input type="number"
                     id="wd-text-fields-salary-start"
                     placeholder="1000"
