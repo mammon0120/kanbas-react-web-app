@@ -7,8 +7,6 @@ export default function Anchors() {
             to get dummy text 
             < br />
 
-            <h4>My GitHub repository</h4>
-            <a id="wd-github" href="https://github.com/mammon0120/kanbas-react-web-app.git"> GitHub</a>
         </div>
     );
 }
