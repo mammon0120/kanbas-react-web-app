@@ -16,8 +16,7 @@ export default function Labs() {
         <Route path="Lab2" element={<Lab2 />} />
         <Route path="Lab3" element={<Lab3 />} />
       </Routes>
-      <h4>My GitHub repository</h4>
-            <a id="wd-github" href="https://github.com/mammon0120/kanbas-react-web-app.git"> GitHub</a>
+      
     </div>
   );
 }  
