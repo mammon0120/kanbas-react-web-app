@@ -33,7 +33,7 @@ export default function Grades() {
 
             <div id="wd-grades-filter" className="d-flex mb-4">
                 <CiFilter className="position-absolute ms-2 mt-2 fs-3" />
-                <button className="btn btn-secondary ps-5">Apply Filters</button>
+                <button className="btn wd-btn-secondary ps-5">Apply Filters</button>
             </div>
 
             <div id="wd-grades-table">

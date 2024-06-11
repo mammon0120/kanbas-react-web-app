@@ -181,7 +181,7 @@ export default function AssignmentEditor() {
             <button className="btn btn-danger me-1 float-end rounded-1">
                 Save
             </button>
-            <button className="btn btn-secondary me-1 float-end border rounded-1">
+            <button className="btn wd-btn-secondary me-1 float-end border rounded-1">
                 Cancel
             </button>
         </div >

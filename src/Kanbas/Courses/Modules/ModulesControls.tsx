@@ -10,7 +10,7 @@ export default function ModulesControls() {
                 Module
             </button>
             <div className="dropdown d-inline me-1 float-end">
-                <button id="wd-publish-all-btn" className="btn btn-lg btn-secondary dropdown-toggle"
+                <button id="wd-publish-all-btn" className="btn btn-lg wd-btn-secondary dropdown-toggle"
                     type="button" data-bs-toggle="dropdown">
                     <GreenCheckmark />
                     Publish All
@@ -46,12 +46,12 @@ export default function ModulesControls() {
             </div>
             {/* Implement the View Progress and Collapse All buttons
           with IDs wd-view-progress and wd-collapse-all */}
-            <button id="wd-view-progress" className="btn btn-lg btn-secondary me-1 float-end"
+            <button id="wd-view-progress" className="btn btn-lg wd-btn-secondary me-1 float-end"
                     type="button" >
                 View Progress
             </button>
 
-            <button id="wd-collapse-all" className="btn btn-lg btn-secondary me-1 float-end"
+            <button id="wd-collapse-all" className="btn btn-lg wd-btn-secondary me-1 float-end"
                     type="button">
                 Collapse All
             </button>

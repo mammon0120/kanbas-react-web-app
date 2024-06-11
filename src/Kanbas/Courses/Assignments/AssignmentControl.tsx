@@ -8,7 +8,7 @@ export default function AssignmentControl() {
                 <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                 Assignment
             </button>
-            <button id="wd-add-assignment-group-btn" className="btn btn-lg btn-secondary me-1 float-end">
+            <button id="wd-add-assignment-group-btn" className="btn btn-lg wd-btn-secondary me-1 float-end">
                 <FaPlus className="position-relative me-2" style={{ bottom: "1px" }} />
                 Group
             </button>

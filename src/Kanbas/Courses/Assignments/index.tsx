@@ -1,9 +1,8 @@
-import AssignmentControl from "./ AssignmentControl";
+import AssignmentControl from "./AssignmentControl";
 import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButton from "./AssignmentControlButton";
 import LessControlButtons from "./LessConstrolButton";
 import LeftButton from "./LeftButton";
-import './index.css'
 
 export default function Assignments() {
     return (
@@ -11,8 +10,8 @@ export default function Assignments() {
             <AssignmentControl />
 
             <ul className="list-group rounded-0">
-                <li className="wd-assignments list-group-item p-0 mb-5 fs-5 border-gray">
-                    <div className="wd-title p-3 ps-2 bg-secondary">
+                <li className="wd-assignments list-group-item p-0 mb-5 fs-5 wd-border-gray">
+                    <div className="wd-title p-3 ps-2 wd-bg-secondary">
                         <BsGripVertical className="me-2 fs-3" />
                         ASSIGNMENTS
                         <AssignmentControlButton />
