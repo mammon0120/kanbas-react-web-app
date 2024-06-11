@@ -1,8 +1,7 @@
 export default function AssignmentEditor() {
     return (
         <div id="wd-assignments-editor" 
-        style={{ height: "90%"}}
-        className="container overflow-auto">
+        className="container">
             <div id="wd-assignments-name" className="mb-3">
                 <label htmlFor="wd-name" className="col-form-label">
                     Assignment Name</label>
