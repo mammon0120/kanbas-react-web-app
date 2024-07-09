@@ -1,8 +1,17 @@
 import GradesControl from "./GradesControl";
 import { HiMagnifyingGlass } from "react-icons/hi2";
 import { CiFilter } from "react-icons/ci";
+import { useParams } from "react-router-dom";
+import * as db from "../../Database";
 
 export default function Grades() {
+    const { cid } = useParams();
+    const users = db.users;
+    const enrollments = db.enrollments;
+    const enrollment = enrollments.filter((enrollment: any) => enrollment.course === cid);
+    const assigments = db.assignments;
+    const assignment = assigments.filter((assignment: any) => assignment.course === cid);
+    const grades = db.grades;
     return (
         <div id="wd-grades" className="container">
             <div className="row">
@@ -41,69 +50,33 @@ export default function Grades() {
                     <thead>
                         <tr>
                             <th scope="col" className="pb-3 text-start">Student Name</th>
-                            <th scope="col">A1 SETUP<br />out of 100</th>
-                            <th scope="col">A2 HTML<br />out of 100</th>
-                            <th scope="col">A3 CSS<br />out of 100</th>
-                            <th scope="col">A4 BOOTSTRAP<br />out of 100</th>
+                            {assignment.map((assignment) => (
+                                <th scope="col">{assignment._id} SETUP<br />out of 100</th>
+                            ))}
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Jane Adams</th>
-                            <td>100%</td>
-                            <td>96.67%</td>
-                            <td>92.18%</td>
-                            <td>66.22%</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Christina Allen</th>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Samreen Ansari</th>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Han Bao</th>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>
-                                <input
-                                    type="text"
-                                    className="border-1 rounded-2 border-danger w-50"
-                                    value="88.03%"></input>
-                            </td>
-                            <td>98.99%</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Mahi Sai Srinivas Bobbili</th>
-                            <td>100%</td>
-                            <td>96.67%</td>
-                            <td>98.37%</td>
-                            <td>100%</td>
-                        </tr>
-                        <tr>
-                            <th scope="row" className="text-start text-danger">Siran Cao</th>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                            <td>100%</td>
-                        </tr>
+                        {enrollment.map(enrollment => {
+                            const user = users.find(user => user._id === enrollment.user);
+                            return (
+                                <tr>
+                                    <th scope="row" className="text-start text-danger">
+                                        {user?.firstName} {user?.lastName}
+                                    </th>
+                                    {assignment.map(assignment => {
+                                        const grade = grades.find(grade => grade.student === user?._id && grade.assignment === assignment._id);
+                                        return (
+                                            <td>
+                                                {grade?.grade}
+                                            </td>
+                                        )
+                                    })}
+                                </tr>
+                            );
+                        })}
                     </tbody>
                 </table>
             </div>
-
-
-
-
-
-
         </div >
 
 

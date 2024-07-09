@@ -3,12 +3,16 @@ import { BsGripVertical } from "react-icons/bs";
 import AssignmentControlButton from "./AssignmentControlButton";
 import LessControlButtons from "./LessConstrolButton";
 import LeftButton from "./LeftButton";
+import { Link, useParams, useLocation } from "react-router-dom";
+import * as db from "../../Database";
 
 export default function Assignments() {
+    const { cid } = useParams();
+    const assignments = db.assignments;
+    const { pathname } = useLocation();
     return (
         <div id="wd-assignments">
             <AssignmentControl />
-
             <ul className="list-group rounded-0">
                 <li className="wd-assignments list-group-item p-0 mb-5 fs-5 wd-border-gray">
                     <div className="wd-title p-3 ps-2 wd-bg-secondary">
@@ -18,75 +22,34 @@ export default function Assignments() {
                     </div>
 
                     <ul className="wd-assignments list-group rounded-0">
-                        <li id="wd-assignment-GreenBorder"
-                        className="wd-assignment-list list-group-item p-3 ps-1">
-                            <div className="row align-items-center">
-                                <div className="col-2">
-                                    <LeftButton />
-                                </div>
-                                <div className="col-8">
-                                    <a className="wd-assignment-link 
-                                    text-dark text-decoration-none"
-                                        href="#/Kanbas/Courses/1234/Assignments/123">
-                                        <strong>A1</strong>
-                                    </a>
-                                    <div className="wd-assignment-details">
-                                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> May 6 at 12:00am
-                                        | <strong>Due</strong> May 13 at 11:59pm | 100 pts
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <LessControlButtons />
-                                </div>
-                            </div>
-                        </li>
+                        {assignments.filter((assignment: any) => assignment.course === cid)
+                            .map((assignment: any) => (
 
-
-                        <li id="wd-assignment-GreenBorder"
-                        className="wd-assignment-list list-group-item p-3 ps-1">
-                            <div className="row align-items-center">
-                                <div className="col-2">
-                                    <LeftButton />
-                                </div>
-                                <div className="col-8">
-                                    <a className="wd-assignment-link
-                                    text-dark text-decoration-none"
-                                        href="#/Kanbas/Courses/1234/Assignments/123">
-                                        <strong>A2</strong>
-                                    </a>
-                                    <div className="wd-assignment-details">
-                                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> May 13 at 12:00am
-                                        | <strong>Due</strong> May 20 at 11:59pm | 100 pts
+                                <li id="wd-assignment-GreenBorder"
+                                    className="wd-assignment-list list-group-item p-3 ps-1">
+                                    <div className="row align-items-center">
+                                        <div className="col-2">
+                                            <LeftButton />
+                                        </div>
+                                        <div className="col-8">
+                                            <Link to={`${pathname}/${assignment._id}`}
+                                                className="wd-assignment-link text-dark text-decoration-none"
+                                            >
+                                                <strong>{assignment._id}</strong>
+                                            </Link>
+                                            <div className="wd-assignment-details">
+                                                <span className="text-danger">{assignment.title}</span> | <strong>Not available until</strong> {assignment.available}
+                                                | <strong>Due</strong> {assignment.due} | {assignment.point} pts
+                                            </div>
+                                        </div>
+                                        <div className="col-2">
+                                            <LessControlButtons />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="col-2">
-                                    <LessControlButtons />
-                                </div>
-                            </div>
-                        </li>
+                                </li>
 
-                        <li id="wd-assignment-GreenBorder"
-                        className="wd-assignment-list list-group-item p-3 ps-1">
-                            <div className="row align-items-center">
-                                <div className="col-2">
-                                    <LeftButton />
-                                </div>
-                                <div className="col-8">
-                                    <a className="wd-assignment-link
-                                    text-dark text-decoration-none"
-                                        href="#/Kanbas/Courses/1234/Assignments/123">
-                                        <strong>A3</strong>
-                                    </a>
-                                    <div className="wd-assignment-details">
-                                        <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> May 20 at 12:00am
-                                        | <strong>Due</strong> May 27 at 11:59pm | 100 pts
-                                    </div>
-                                </div>
-                                <div className="col-2">
-                                    <LessControlButtons />
-                                </div>
-                            </div>
-                        </li>
+                            ))}
+
                     </ul>
 
 
