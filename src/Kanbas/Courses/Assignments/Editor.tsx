@@ -1,15 +1,51 @@
-import { Link, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import * as db from "../../Database";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { addAssignment, updateAssignment } from "./reducer";
 
 export default function AssignmentEditor() {
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
     const { id } = useParams();
     const { cid } = useParams();
-    const assignments = db.assignments;
+    const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const assignment = assignments.find((assignment: any) => assignment._id === id);
-    const name = assignment&&assignment.title;
-    const points = assignment&&assignment.points;
-    const available = assignment&&assignment.date_available;
-    const due = assignment&&assignment.date_due;
+    
+    const [title, setTitle] = useState((assignment&&assignment.title) || "New Assignment");
+    const course = (assignment&&assignment.course) || cid;
+    const [points, setPoints] = useState((assignment&&assignment.points) || 100);
+    const [available, setAvailable] = useState((assignment&&assignment.available) || "");
+    const [due, setDue] = useState((assignment&&assignment.due) || "");
+    const [description, setDescription] = useState((assignment&&assignment.description) || "New Assignment Description");
+    const defaultDescription = (
+        <>
+        <p>The assignment is <span className="text-danger">available online</span> </p>
+        <p>Submit a link to the landing page of
+            your web application running on Netlify.</p>
+        <p>The landing page should include the follwing:</p>
+        <ul>
+            <li>your full name and section</li>
+            <li>Links to each of the lab assignments</li>
+            <li>Links to the Kanbas application</li>
+            <li>Links to all relevant source code repositories</li>
+        </ul>
+        <p>The Kanbas application should include a link to navigate back to the landing page.</p>
+        </>
+    );
+
+    const newAssignment = {
+        _id: id,
+        title: title,
+        course: course,
+        points: points,
+        available: available,
+        due: due,
+        description: description,
+    };
+    const location = useLocation();
+    const showDefaultDescription = description.includes("default");
+    const checkNew = location.pathname.includes("newAssignment");
     return (
         <div id="wd-assignments-editor" 
         className="container">
@@ -17,24 +53,18 @@ export default function AssignmentEditor() {
                 <label htmlFor="wd-name" className="col-form-label">
                     Assignment Name</label>
                 <div id="wd-assignment-name-input">
-                    <input id="wd-name" value={name} className="form-control" />
+                    <input id="wd-name" value={title} className="form-control" 
+                    onChange={(e) => setTitle(e.target.value)}/>
                 </div>
             </div>
 
-            <div id="wd-description" className="form-control mb-3" >
-                <p>The assignment is <span className="text-danger">available online</span> </p>
-                <p>Submit a link to the landing page of
-                    your web application running on Netlify.</p>
-                <p>The landing page should include the follwing:</p>
-                <ul>
-                    <li>your full name and section</li>
-                    <li>Links to each of the lab assignments</li>
-                    <li>Links to the Kanbas application</li>
-                    <li>Links to all relevant source code repositories</li>
-                </ul>
-                <p>The Kanbas application should include a link to navigate back to the landing page.</p>
+            <div id="wd-description" className="form-control mb-3">
+                {showDefaultDescription && defaultDescription}
+                {!showDefaultDescription && (
+                    <input value={description} className="form-control mb-3"
+                    onChange={(e) => setDescription(e.target.value)}/>
+                )}
             </div>
-
 
             <form>
                 <div id="wd-assignments-points" className="mb-3 form-group row">
@@ -42,7 +72,8 @@ export default function AssignmentEditor() {
                         <label htmlFor="wd-points" className="position-absolute end-0">Points</label>
                     </div>
                     <div className="col-8">
-                        <input id="wd-points" value={points} className="form-control" />
+                        <input id="wd-points" value={points} className="form-control" 
+                        onChange={(e) => setPoints(e.target.value)}/>
                     </div>
                 </div>
 
@@ -69,6 +100,7 @@ export default function AssignmentEditor() {
                     <div className="col-8">
                         <select id="wd-display-grade-as" className="form-select">
                             <option value="Percentage">percentage</option>
+                            <option value="Percentage">GPA</option>
                         </select>
                     </div>
                 </div>
@@ -84,6 +116,7 @@ export default function AssignmentEditor() {
                         <div className="form-control">
                             <select id="wd-submission-type" className="form-select mt-2 mb-3">
                                 <option value="Online">Online</option>
+                                <option value="Online">OnSite</option>
                             </select>
                             <label className="mb-2"><strong>Online Entry Option</strong></label>
 
@@ -165,40 +198,48 @@ export default function AssignmentEditor() {
                             <div className="mb-2">
                                 <label htmlFor="wd-due-date"><strong>Due</strong></label><br />
                                 <input type="date" id="wd-due-date" value={due}
-                                    className="form-control" />
+                                    className="form-control"
+                                    onChange={(e) => setDue(e.target.value)} />
                             </div>
 
                             <div className="mb-3 row">
                                 <div className="col-6">
                                     <label htmlFor="wd-available-from"><strong>Available from</strong></label>
                                     <input type="date" id="wd-available-from" value={available}
-                                     className="form-control"/>
+                                     className="form-control"
+                                     onChange={(e) => setAvailable(e.target.value)}/>
                                 </div>
                                 <div className="col-6">
                                 <label htmlFor="wd-available-until"><strong>Until</strong></label>
                                 <input type="date" id="wd-available-until" value={due} 
-                                className="form-control"/>
+                                className="form-control"
+                                onChange={(e) => setDue(e.target.value)}/>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-
                 </div>
-
             </form >
 
             <hr />
-            <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-            <button className="btn btn-danger me-1 float-end rounded-1">
+            <button className="btn btn-danger me-1 float-end rounded-1"
+            onClick={() => {
+                if (!checkNew) {
+                    dispatch(updateAssignment({...assignment, newAssignment}));
+                } else {
+                    dispatch(addAssignment(newAssignment));
+                }
+                navigate(-1);
+            }}>
                 Save
             </button>
-            </Link>
-            <Link to={`/Kanbas/Courses/${cid}/Assignments`}>
-            <button className="btn wd-btn-secondary me-1 float-end border rounded-1">
+     
+         
+            <button className="btn wd-btn-secondary me-1 float-end border rounded-1"
+             onClick={() => navigate(-1)}>
                 Cancel
             </button>
-            </Link>
+  
         </div >
     );
 }

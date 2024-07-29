@@ -5,11 +5,17 @@ import LessControlButtons from "./LessConstrolButton";
 import LeftButton from "./LeftButton";
 import { Link, useParams, useLocation } from "react-router-dom";
 import * as db from "../../Database";
+import { addAssignment, deleteAssignment, updateAssignment } from "./reducer";
+import { useSelector, useDispatch } from "react-redux";
+import { useState } from "react";
 
 export default function Assignments() {
     const { cid } = useParams();
-    const assignments = db.assignments;
     const { pathname } = useLocation();
+    const { assignments} = useSelector((state: any) => state.assignmentsReducer);
+    const dispatch = useDispatch();
+    
+
     return (
         <div id="wd-assignments">
             <AssignmentControl />
@@ -35,11 +41,11 @@ export default function Assignments() {
                                             <Link to={`${pathname}/${assignment._id}`}
                                                 className="wd-assignment-link text-dark text-decoration-none"
                                             >
-                                                <strong>{assignment._id}</strong>
+                                                <strong>{assignment.title}</strong>
                                             </Link>
                                             <div className="wd-assignment-details">
-                                                <span className="text-danger">{assignment.title}</span> | <strong>Not available until</strong> {assignment.available}
-                                                | <strong>Due</strong> {assignment.due} | {assignment.point} pts
+                                                <span className="text-danger">Multiple Modules</span> | <strong>Not available until</strong> {assignment.available}
+                                                | <strong>Due</strong> {assignment.due} | {assignment.points} pts {assignment.description}
                                             </div>
                                         </div>
                                         <div className="col-2">
