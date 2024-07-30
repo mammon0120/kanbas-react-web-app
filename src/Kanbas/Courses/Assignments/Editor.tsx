@@ -11,29 +11,39 @@ export default function AssignmentEditor() {
     const { cid } = useParams();
     const { assignments } = useSelector((state: any) => state.assignmentsReducer);
     const assignment = assignments.find((assignment: any) => assignment._id === id);
+
+    const [title, setTitle] = useState((assignment && assignment.title) || "New Assignment");
+    const course = (assignment && assignment.course) || cid;
+    const [points, setPoints] = useState((assignment && assignment.points) || 100);
+    const [available, setAvailable] = useState((assignment && assignment.available) || "");
+    const [due, setDue] = useState((assignment && assignment.due) || "");
+    const [description, setDescription] = useState((assignment && assignment.description) || "New Assignment Description");
     
-    const [title, setTitle] = useState((assignment&&assignment.title) || "New Assignment");
-    const course = (assignment&&assignment.course) || cid;
-    const [points, setPoints] = useState((assignment&&assignment.points) || 100);
-    const [available, setAvailable] = useState((assignment&&assignment.available) || "");
-    const [due, setDue] = useState((assignment&&assignment.due) || "");
-    const [description, setDescription] = useState((assignment&&assignment.description) || "New Assignment Description");
     const defaultDescription = (
         <>
-        <p>The assignment is <span className="text-danger">available online</span> </p>
-        <p>Submit a link to the landing page of
-            your web application running on Netlify.</p>
-        <p>The landing page should include the follwing:</p>
-        <ul>
-            <li>your full name and section</li>
-            <li>Links to each of the lab assignments</li>
-            <li>Links to the Kanbas application</li>
-            <li>Links to all relevant source code repositories</li>
-        </ul>
-        <p>The Kanbas application should include a link to navigate back to the landing page.</p>
+            <p>The assignment is <span className="text-danger">available online</span> </p>
+            <p>Submit a link to the landing page of
+                your web application running on Netlify.</p>
+            <p>The landing page should include the follwing:</p>
+            <ul>
+                <li>your full name and section</li>
+                <li>Links to each of the lab assignments</li>
+                <li>Links to the Kanbas application</li>
+                <li>Links to all relevant source code repositories</li>
+            </ul>
+            <p>The Kanbas application should include a link to navigate back to the landing page.</p>
         </>
     );
-
+    const defaultContent = `
+The assignment is available online.
+Submit a link to the landing page of your web application running on Netlify.
+The landing page should include the following:
+  - Your full name and section
+  - Links to each of the lab assignments
+  - Links to the Kanbas application
+  - Links to all relevant source code repositories
+The Kanbas application should include a link to navigate back to the landing page.
+`;
     const newAssignment = {
         _id: id,
         title: title,
@@ -47,23 +57,21 @@ export default function AssignmentEditor() {
     const showDefaultDescription = description.includes("default");
     const checkNew = location.pathname.includes("newAssignment");
     return (
-        <div id="wd-assignments-editor" 
-        className="container">
+        <div id="wd-assignments-editor"
+            className="container">
             <div id="wd-assignments-name" className="mb-3">
                 <label htmlFor="wd-name" className="col-form-label">
                     Assignment Name</label>
                 <div id="wd-assignment-name-input">
-                    <input id="wd-name" value={title} className="form-control" 
-                    onChange={(e) => setTitle(e.target.value)}/>
+                    <input id="wd-name" value={title} className="form-control"
+                        onChange={(e) => setTitle(e.target.value)} />
                 </div>
             </div>
 
-            <div id="wd-description" className="form-control mb-3">
-                {showDefaultDescription && defaultDescription}
-                {!showDefaultDescription && (
-                    <input value={description} className="form-control mb-3"
-                    onChange={(e) => setDescription(e.target.value)}/>
-                )}
+            <div id="wd-description"  >
+                <textarea value={showDefaultDescription ? defaultContent : description}
+                    className="form-control mb-3" rows={11}
+                    onChange={(e) => setDescription(e.target.value)} />
             </div>
 
             <form>
@@ -72,8 +80,8 @@ export default function AssignmentEditor() {
                         <label htmlFor="wd-points" className="position-absolute end-0">Points</label>
                     </div>
                     <div className="col-8">
-                        <input id="wd-points" value={points} className="form-control" 
-                        onChange={(e) => setPoints(e.target.value)}/>
+                        <input id="wd-points" value={points} className="form-control"
+                            onChange={(e) => setPoints(e.target.value)} />
                     </div>
                 </div>
 
@@ -181,10 +189,10 @@ export default function AssignmentEditor() {
 
                 <div id="wd-assignment-visibility" className="mb-5 form-group row">
                     <div className="col-4 position-relative">
-                        <label htmlFor="wd-assign-to" 
-                        className="position-absolute end-0">
+                        <label htmlFor="wd-assign-to"
+                            className="position-absolute end-0">
                             Assign
-                            </label>
+                        </label>
                     </div>
 
                     <div className="col-8 ">
@@ -206,14 +214,14 @@ export default function AssignmentEditor() {
                                 <div className="col-6">
                                     <label htmlFor="wd-available-from"><strong>Available from</strong></label>
                                     <input type="date" id="wd-available-from" value={available}
-                                     className="form-control"
-                                     onChange={(e) => setAvailable(e.target.value)}/>
+                                        className="form-control"
+                                        onChange={(e) => setAvailable(e.target.value)} />
                                 </div>
                                 <div className="col-6">
-                                <label htmlFor="wd-available-until"><strong>Until</strong></label>
-                                <input type="date" id="wd-available-until" value={due} 
-                                className="form-control"
-                                onChange={(e) => setDue(e.target.value)}/>
+                                    <label htmlFor="wd-available-until"><strong>Until</strong></label>
+                                    <input type="date" id="wd-available-until" value={due}
+                                        className="form-control"
+                                        onChange={(e) => setDue(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -223,23 +231,23 @@ export default function AssignmentEditor() {
 
             <hr />
             <button className="btn btn-danger me-1 float-end rounded-1"
-            onClick={() => {
-                if (!checkNew) {
-                    dispatch(updateAssignment({...assignment, newAssignment}));
-                } else {
-                    dispatch(addAssignment(newAssignment));
-                }
-                navigate(-1);
-            }}>
+                onClick={() => {
+                    if (!checkNew) {
+                        dispatch(updateAssignment({ ...assignment, ...newAssignment }));
+                    } else {
+                        dispatch(addAssignment(newAssignment));
+                    }
+                    navigate(-1);
+                }}>
                 Save
             </button>
-     
-         
+
+
             <button className="btn wd-btn-secondary me-1 float-end border rounded-1"
-             onClick={() => navigate(-1)}>
+                onClick={() => navigate(-1)}>
                 Cancel
             </button>
-  
+
         </div >
     );
 }
